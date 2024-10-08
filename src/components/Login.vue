@@ -3,7 +3,6 @@ import { reactive,ref,inject } from 'vue'
 import JsEncrypt from "jsencrypt"
 import { publicKey } from '../utils/publicKey'
 
-const labelPosition = 'top'
 const form = reactive({
     username: '',
     password: ''
@@ -57,7 +56,7 @@ const onLogin = async (formEl)=>{
 
 <template>
     <div class="fullscreen-div">
-        <el-form :label-position="labelPosition" :model="form" :rules="rules" ref="ruleFormRef">
+        <el-form label-position="top" :model="form" :rules="rules" ref="ruleFormRef">
             <h2>个人小窝后台管理系统</h2>
             <el-form-item label="用户名" prop="username">
                 <el-input type="text" v-model="form.username" />

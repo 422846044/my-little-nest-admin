@@ -34,4 +34,7 @@ router.beforeEach(function (to, from, next) {
     }
 })
 
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+  }
 app.mount('#app')

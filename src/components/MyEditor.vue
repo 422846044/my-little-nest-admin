@@ -70,6 +70,7 @@ function uploadFile(file, resolve) {
   }
 }
 
+
 var axios = inject('$axios')
 const emits = defineEmits(["updateEditor"]);
 const props = defineProps({
