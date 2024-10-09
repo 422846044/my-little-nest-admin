@@ -6,9 +6,9 @@ import {resolve} from 'path'
 export default defineConfig({
   plugins: [vue()],
   define: {
-    'process.env': {
-    VUE_APP_BASE_API:'http://localhost:8081/admin'
-    }
+    // 'process.env': {
+    // VUE_APP_BASE_API:'http://localhost:8081/admin'
+    // }
   },
   resolve: {
     // 配置路径别名
