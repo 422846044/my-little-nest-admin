@@ -1,5 +1,6 @@
 <script setup>
-import { ref, inject, reactive,onMounted } from 'vue'
+import {reactive,onMounted,onBeforeMount } from 'vue'
+import {getDictMapByDictCode} from '../api'
 
 const props = defineProps({
   dictCode: {
@@ -9,22 +10,28 @@ const props = defineProps({
   placeholder: {
     type: String,
     default: "请输入"
+  },
+  initValue:{
+    type: String,
+    default: ''
   }
 })
 
-const axios = inject('$axios')
+const data = reactive({
+  selectValue: ''
+})
 
 const emits = defineEmits(["selectChange"]);
 
 
-const value = ref('')
-const options = reactive([])
+const options = reactive([{}])
 
-onMounted(()=>{
-  axios.get(process.env.VUE_APP_BASE_API + '/dict/getDictDetailsByDictCode',{params:{ dictCode: props.dictCode }} )
+onMounted(async ()=>{
+  data.selectValue = props.initValue
+  await getDictMapByDictCode({ dictCode: props.dictCode })
   .then(res => {
-    if (res.data.code == 200) {
-      let info = res.data.data;
+    if (res.data.success) {
+      let info = res.data.data; 
       for (let i = 0; i < info.length; i++) {
         options.push({
           'value': info[i].code,
@@ -37,17 +44,21 @@ onMounted(()=>{
   .catch(error => {
     console.log(error)
   })
+  console.log(options)
+  console.log(props.initValue)
 })
 
+
+
 function change(){
-  emits('selectChange', value.value)
+  emits('selectChange', data.selectValue)
 }
 
 </script>
   
 
 <template>
-  <el-select v-model="value" :placeholder="props.placeholder" style="width: 240px" @change="change">
+  <el-select v-model="data.selectValue" :placeholder="props.placeholder" style="width: 240px" @change="change">
     <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"
       :disabled="item.disabled" />
   </el-select>

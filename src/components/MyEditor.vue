@@ -40,7 +40,7 @@ function uploadFile(file, resolve) {
   var prefix = uuidv4().replace('-', '')
   const filename = prefix + suffix; // uuid+后缀名
   if (file) {
-    axios.get('http://127.0.0.1:8080/common/qiniu/getUploadToken').then(res => {
+    axios.get(`${import.meta.env.VITE_BASE_ADMIN_URL}/common/qiniu/getUploadToken`).then(res => {
       if (res.data.result === true) {
         const putExtra = { fname: "", params: {}, git: null };
         const config = { useCdnDomain: true, region: qiniu.region.z2 };

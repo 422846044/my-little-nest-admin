@@ -21,6 +21,7 @@ app.use(router);
 app.use(ElementPlus)
 
 router.beforeEach(function (to, from, next) {
+    console.log(to)
     if (to.meta.needLogin) {
         if (localStorage.getItem('access_token')) {
             next();

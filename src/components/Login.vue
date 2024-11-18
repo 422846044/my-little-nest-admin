@@ -1,11 +1,16 @@
 <script setup>
 import { reactive,ref,inject } from 'vue'
+import {login} from '../api'
+import {ElMessageBox,ElMessage} from 'element-plus'
+import { useRouter } from 'vue-router'
 import JsEncrypt from "jsencrypt"
 import { publicKey } from '../utils/publicKey'
 
+const router = useRouter()
+
 const form = reactive({
-    username: '',
-    password: ''
+    username: '422846044',
+    password: '422846044'
 })
 const ruleFormRef = ref()
 // let je = new JsEncrypt()
@@ -28,22 +33,21 @@ const onLogin = async (formEl)=>{
     if (!formEl) return
     await formEl.validate((valid, fields) => {
     if (valid) {
-      console.log('submit!')
-      axios.post(process.env.VUE_APP_BASE_API+"/login",form)
+      login(form)
       .then(res=>{
-        console.log(res)
         if(res.data.code==200){
             localStorage.setItem('access_token',res.data.data.accessToken)
             localStorage.setItem('refresh_token',res.data.data.refreshToken)
             console.log(localStorage.getItem('access_token'))
-            alert('登录成功')
+            router.push('/home')
+            ElMessage.success(res.data.message)
         }else{
-            alert(res.data.message)
+            ElMessage.error(res.data.message)
         }
-        
       })
       .catch(error=>{
-        console.log('login error')
+        console.log(error)
+        ElMessage.error('请求失败')
       })
     } else {
       console.log('error submit!', fields)

@@ -7,8 +7,39 @@ import http from '../utils/http'
  let admin = import.meta.env.VITE_BASE_ADMIN_URL
 
  //登录
-export function login(){
-     
+export function login(params){
+     return http.post(`${admin}/login`,params)
+}
+
+//添加文章
+export function addArticle(params){
+     return http.post(`${admin}/article/addArticle`,params)
+}
+
+//获取数据字典数据
+export function getDictMapByDictCode(params){
+     return http.get(`${admin}/dict/getDictDetailsByDictCode`,params)
+}
+
+//查询首页数据统计
+export function getHomeDataCount(){
+     return http.get(`${admin}/article/dataCount`)
+}
+
+//查询文章列表
+export function getArticleListByPage(params){
+     return http.get(`${admin}/article/list`,params)
+}
+
+// 查询文章信息
+export function getArticleInfo(params){
+     let articleId = encodeURIComponent(params)
+     return http.get(`${admin}/article/info/${articleId}`)
+}
+
+//刷新凭证接口
+export function refreshToken(params){
+     return http.get(`${admin}/refresh/refresh`,params)
 }
 
  //道聚城日志查询

@@ -1,17 +1,13 @@
 <script setup>
-import Top from './components/Top.vue'
-import Aside from './components/Aside.vue'
 import {
   Document,
   Menu as IconMenu,
   Location,
   Setting,
 } from '@element-plus/icons-vue'
-  const show = localStorage.getItem('access_token')!=null
 </script>
-
 <template>
-  <el-container>
+  <!-- <el-container>
     <el-header>
       <Top v-show="show"></Top>
     </el-header>
@@ -19,16 +15,17 @@ import {
         <el-aside width="200px">
           <Aside></Aside>
         </el-aside>
-        <el-main>
+        <el-main> -->
         <!-- 路由匹配到的组件将渲染在这里 -->
         <router-view></router-view>
-    </el-main>
+    <!-- </el-main>
       </el-container>
     
     <el-footer>
 
       </el-footer>
-  </el-container>
+  </el-container> -->
+  
 </template>
 
 <style>
