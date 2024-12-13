@@ -16,13 +16,24 @@ export function addArticle(params){
      return http.post(`${admin}/article/addArticle`,params)
 }
 
+// 添加文章草稿
+export function addArticleDraft(params){
+     return http.post(`${admin}/article/addArticleDraft`,params)
+}
+
+// 更新文章
+export function updateArticle(params){
+     return http.put(`${admin}/article/updateArticle`,params)
+}
+
+
 //获取数据字典数据
 export function getDictMapByDictCode(params){
      return http.get(`${admin}/dict/getDictDetailsByDictCode`,params)
 }
 
 //查询首页数据统计
-export function getHomeDataCount(){
+export function getHomeDataCount(){ 
      return http.get(`${admin}/article/dataCount`)
 }
 
@@ -41,6 +52,12 @@ export function getArticleInfo(params){
 export function refreshToken(params){
      return http.get(`${admin}/refresh/refresh`,params)
 }
+
+//上传文件
+export function uploadObj(param){
+     return http.post(`${admin}/common/uploadFile`,param)
+}
+
 
  //道聚城日志查询
 export function djcTaskQuery(params){

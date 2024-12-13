@@ -1,11 +1,19 @@
 <script setup>
-import { ref, reactive,onMounted } from 'vue'
+import { ref, reactive,onMounted,watch } from 'vue'
 import {getDictMapByDictCode} from '../api'
 
 const props = defineProps({
   dictCode: {
     type: String,
     default: ""
+  },
+  initValue: {
+    type: Array,
+    default:[]
+  },
+  makeReq:{
+    type: Boolean,
+    default: false
   }
 })
 
@@ -16,8 +24,9 @@ const options = reactive([])
 
 const checkList = ref([])
 
-onMounted(()=>{
-  getDictMapByDictCode({ dictCode: props.dictCode })
+function getDict(makeReq){
+  if(makeReq){
+    getDictMapByDictCode({ dictCode: props.dictCode })
   .then(res => {
     console.log(res)
     if (res.data.code == 200) {
@@ -34,10 +43,21 @@ onMounted(()=>{
   .catch(error => {
     console.log(error)
   })
+  checkList.value = props.initValue
+  console.log(props.initValue)
+  change()
+  }
+}
+
+watch(()=>props.makeReq,(newValue, oldValue)=>{
+  getDict(props.makeReq)
+})
+
+onMounted(async ()=>{
+  getDict(props.makeReq)
 })
 
 function change(){
-  console.log(checkList)
   emits('checkboxChange',checkList)
 }
 

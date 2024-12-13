@@ -6,6 +6,7 @@ import Index from '../components/Index.vue'
 import NewArticle from '../components/NewArticle.vue'
 import ArticleManage from '../components/ArticleManage.vue'
 import EditArticle from '../components/EditArticle.vue'
+import publishCenter from '../components/publish.center.vue'
 
 
 const routes = [
@@ -19,36 +20,60 @@ const routes = [
   {
     path: '/',
     redirect: '/home',
+    name: "index",
     component: Index,
+    meta: {
+      needLogin: true,
+      title: '首页'
+    },
     children: [{
       path: '/home',
       component: Home,
+      name: 'home',
       meta: {
-        needLogin: true
+        needLogin: true,
+        title: '首页'
       }
-
     },
     {
       path: '/articleManage',
-      component: ArticleManage,
+      component: publishCenter,
+      redirect: '/articleManage',
+      name: "文章管理",
       meta: {
-        needLogin: true
-      }
+        needLogin: true,
+        title: "文章管理"
+      },
+      children: [
+        {
+          path: '/articleManage',
+          component: ArticleManage,
+          name: "文章管理",
+          meta: {
+            needLogin: true,
+            title: "文章管理"
+          }
+        },
+        {
+          path: '/newArticle',
+          component: NewArticle,
+          name: "newArticle",
+          meta: {
+            needLogin: true,
+            title: "新建文章"
+          }
+        },
+        {
+          path: '/editArticle',
+          component: EditArticle,
+          name: 'editArticle',
+          meta: {
+            needLogin: true,
+            title: "编辑文章"
+          }
+        }
+      ]
     },
-    {
-      path: '/newArticle',
-      component: NewArticle,
-      meta: {
-        needLogin: true
-      }
-    },
-    {
-      path: '/editArticle',
-      component: EditArticle,
-      meta: {
-        needLogin: true
-      }
-    }
     ]
   },
   {

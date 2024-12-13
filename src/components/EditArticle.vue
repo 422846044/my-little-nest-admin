@@ -3,37 +3,47 @@ import { ref, reactive, onMounted } from 'vue'
 import MyEditor from './MyEditor.vue'
 import DictSelect from './DictSelect.vue'
 import DictCheckBox from './DictCheckBox.vue'
-import {addArticle, getArticleInfo} from '../api'
+import {updateArticle, getArticleInfo, addArticleDraft} from '../api'
 import {ElMessage} from 'element-plus'
 import { useRoute } from 'vue-router'
 
+const route = useRoute()
+let articleId = route.query.articleId
 
-onMounted(()=>{
-  const route = useRoute()
-  let articleId = route.query.articleId
+
+onMounted(async ()=>{
   // 根据id回显信息
-  getArticleInfo(articleId)
+  await getArticleInfo(articleId)
   .then(res=>{
     if(res.data.success){
       articleData.title = res.data.data.title
       articleData.content = res.data.data.content
       articleData.category = res.data.data.category
       articleData.tags = res.data.data.tags
+      articleData.status = res.data.data.status
+      console.log(res.data.data)
     }
   })
+  makeReq.req = true
 })
 
 
 
 const ruleFormRef = ref()
 
-let articleData = reactive({
-  title: '',
-  content: '',
-  category: 0,
-  tags:[]
+const makeReq = reactive({
+  'req':false
 })
 
+const articleData = reactive({
+  title: '',
+  content: '',
+  category: '',
+  tags:[],
+  status: null
+})
+
+articleData.id = articleId
 
 function updateEditor(value) {
   articleData.content = value;
@@ -44,7 +54,7 @@ const save = async (formEl) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      addArticle(articleData)
+      updateArticle(articleData)
         .then(res => {
           if (res.data.success) {
             ElMessage.success(res.data.message)
@@ -59,6 +69,40 @@ const save = async (formEl) => {
   })
 }
 
+
+const add = async (formEl) => {
+  if (!formEl) return
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      addArticleDraft(articleData)
+        .then(res => {
+          if (res.data.success) {
+            ElMessage.success(res.data.message)
+          }
+        })
+        .catch(error => {
+
+        })
+    } else {
+
+    }
+  })
+}
+
+const saveDraft = async (formEl) => {
+  check(formEl,'title')
+  addArticleDraft(articleData)
+    .then(res => {
+      if (res.data.success) {
+        ElMessage.success(res.data.message)
+      }
+    })
+    .catch(error => {
+
+    })
+}
+
+
 const check = async (formEl,field) => {
   await formEl.validateField(field,error=>{})
 }
@@ -69,7 +113,7 @@ function selectChange(value) {
 }
 
 function checkboxChange(checkList) {
-  articleData.tags = checkList
+  articleData.tags = checkList.value
 }
 
 const rules = reactive({
@@ -96,10 +140,10 @@ const rules = reactive({
       <el-input v-model="articleData.title" placeholder="请输入标题" />
     </el-form-item>
     <el-form-item label="分类" prop="category">
-      <DictSelect placeholder="请选择分类" dictCode="wzfl" @selectChange="selectChange" :initValue="articleData.category"></DictSelect>
+      <DictSelect placeholder="请选择分类" dictCode="wzfl" @selectChange="selectChange" :initValue="articleData.category" :makeReq="makeReq.req"></DictSelect>
     </el-form-item>
     <el-form-item label="标签" prop="tags">
-      <DictCheckBox dictCode="wzbq" @checkboxChange="checkboxChange"></DictCheckBox>
+      <DictCheckBox dictCode="wzbq" @checkboxChange="checkboxChange" :initValue="articleData.tags" :makeReq="makeReq.req"></DictCheckBox>
     </el-form-item>
     <el-form-item label="文章内容" prop="content">
       <div >
@@ -107,7 +151,9 @@ const rules = reactive({
       </div>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="save(ruleFormRef)">保存</el-button>
+      <el-button v-if="articleData.status == 2" type="info" @click="saveDraft(ruleFormRef)">暂存草稿</el-button>
+      <el-button v-if="articleData.status == 2" type="primary" @click="add(ruleFormRef)">发布</el-button>
+      <el-button v-if="articleData.status == 1" type="primary" @click="save(ruleFormRef)">保存</el-button>
     </el-form-item>
   </el-form>
 </template>
