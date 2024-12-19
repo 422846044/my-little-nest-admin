@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+
+        .container-lottery {
+            position: relative;
+            width: 540px;
+            height: 540px;
+            margin: 10px auto 0;
+            background: radial-gradient(circle, #f6f7d0, #ffdf93);
+            border: 10px #f6f7d0 solid;
+            border-radius: 50%;
+        }
+
+        .wrap-circle {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border: 20px solid #57dcc9;
+            border-radius: 50%;
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                width: 10px;
+                height: 10px;
+                /*background-color: red;*/
+                border-radius: 50%;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                transform-origin: center;
+            }
+
+            &::before {
+                 box-shadow: 0 -250px 0 0 #f6f7d0,
+                177px -177px 0 0 #f6f7d0,
+                250px 0 0 0 #f6f7d0,
+                177px 177px 0 0 #f6f7d0,
+                0 250px 0 0 #f6f7d0,
+                -177px 177px 0 0 #f6f7d0,
+                -250px 0 0 0 #f6f7d0,
+                -177px -177px 0 0 #f6f7d0
+            }
+        }
+
+        .prize-list {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .prize-list::before,
+        .fruit-plate::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-origin: center center;
+            border-radius: 50%;
+        }
+
+        .prize-list::before {
+            background: conic-gradient(
+                    #f6f7d0 0deg,
+                    #f6f7d0 44deg,
+                    #57dcc9 45deg,
+                    #f6f7d0 45deg,
+                    #f6f7d0 89deg,
+                    #57dcc9 90deg,
+                    #f6f7d0 90deg,
+                    #f6f7d0 134deg,
+                    #57dcc9 135deg,
+                    #f6f7d0 135deg,
+                    #f6f7d0 179deg,
+                    #57dcc9 180deg,
+                    #f6f7d0 180deg,
+                    #f6f7d0 224deg,
+                    #57dcc9 225deg,
+                    #f6f7d0 225deg,
+                    #f6f7d0 269deg,
+                    #57dcc9 270deg,
+                    #f6f7d0 270deg,
+                    #f6f7d0 314deg,
+                    #57dcc9 315deg,
+                    #f6f7d0 315deg,
+                    #f6f7d0 359deg,
+                    #57dcc9 360deg
+            );
+        }
+
+        .prize-list1 {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .prize-list1::before,
+        .fruit-plate::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-origin: center center;
+            border-radius: 50%;
+        }
+
+        .prize-list1::before {
+            background: conic-gradient(
+                    #f6f7d0 0deg,
+                    #f6f7d0 89deg,
+                    #57dcc9 90deg,
+                    #f6f7d0 90deg,
+                    #f6f7d0 179deg,
+                    #57dcc9 180deg,
+                    #f6f7d0 180deg,
+                    #f6f7d0 269deg,
+                    #57dcc9 270deg,
+                    #f6f7d0 270deg,
+                    #f6f7d0 359deg,
+                    #57dcc9 360deg
+            );
+        }
+
+        .prize-list2 {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .prize-list2::before,
+        .fruit-plate::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-origin: center center;
+            border-radius: 50%;
+        }
+
+        .prize-list2::before {
+            background: conic-gradient(
+                    #f6f7d0 0deg,
+                    #f6f7d0 119deg,
+                    #57dcc9 120deg,
+                    #f6f7d0 120deg,
+                    #f6f7d0 239deg,
+                    #57dcc9 240deg,
+                    #f6f7d0 240deg,
+                    #f6f7d0 359deg,
+                    #57dcc9 360deg
+            );
+        }
+
+        .prize-item {
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+        .prize-item img {
+            width: 60px;
+            margin: 30px auto 10px;
+            display: block;
+        }
+
+        .img-thanks {
+            width: 200px;
+            margin-top: 40px;
+        }
+
+        .prize-item p {
+            color: #2eb6aa;
+            font-size: 20px;
+            text-align: center;
+            white-space: pre-line;
+        }
+
+        .btn {
+            /*display: none;*/
+            width: 128px;
+            height: 156px;
+            background: url(zhizhen.png) no-repeat center / 100% 100%;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            
+        }
+
+    </style>
+</head>
+<body>
+<div id="app" v-cloak style="display: flex; flex-wrap: wrap; background-image: url('background2.png'); background-size:cover; position: absolute; width: 100%; height: 100%; align-items: center;" >
+    
+        <div class="container-lottery">
+        <div class="wrap-circle">
+            <div class="prize-list1" ref="prizeWrap1" :style="bgColor1">
+                <div
+                        class="prize-item"
+                        v-for="(item, index) in prizeList1"
+                        :style="prizeStyle1(index)"
+                        :key="index"
+                >
+                    <img
+                            :src="item.pic"
+                            :class="{ 'img-thanks': item.id === 3 || item.id === 4 }"
+                            alt=""
+                    />
+                    <p>{{ item.name }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="btn" ></div>
+    </div>
+    <div class="container-lottery">
+        <div class="wrap-circle">
+            <div class="prize-list2" ref="prizeWrap2" :style="bgColor2">
+                <div
+                        class="prize-item" 
+                        v-for="(item, index) in prizeList2"
+                        :style="prizeStyle2(index)"
+                        :key="index"
+                >
+                    <img
+                            :src="item.pic"
+                            :class="{ 'img-thanks': item.id === 3 || item.id === 4 }"
+                            alt=""
+                    />
+                    <p>{{ item.name }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="btn" ></div>
+    </div>
+    <div class="container-lottery">
+        <div class="wrap-circle">
+            <div class="prize-list" ref="prizeWrap3" :style="bgColor3">
+                <div
+                        class="prize-item"
+                        v-for="(item, index) in prizeList3"
+                        :style="prizeStyle3(index)"
+                        :key="index"
+                >
+                    <img
+                            :src="item.pic"
+                            :class="{ 'img-thanks': item.id === 3 || item.id === 4 }"
+                            alt=""
+                    />
+                    <p>{{ item.name }}</p>
+                </div>
+            </div>
+        
+    </div>
+    <div class="btn"></div>
+    </div>
+    
+    <div @click="start" style="height:10%; display:flex;justify-content: center; text-align: center; vertical-align:middle; width: 100%;cursor: pointer;"><input style="height: 100%; width: 10%;font-size:x-large; color: white;background-color: #57dcc9; border-radius: 30px; border-color: #ffdf93;" type="button" @click="start" value="点击抽奖"></div>
+</div>
+
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+    const {createApp, onMounted, onUnmounted, ref, reactive, toRefs, computed} = Vue
+    createApp({
+        setup() {
+            const state = reactive({
+                prizeList1: [
+                    {
+                        name: "19朵香槟玫瑰加橙色泡泡",
+                        pic: "http://p0.meituan.net/shangouproductapi/6e02aa652b56d36a52224129dc4466a4177276.jpg@watermark=1&&object=L3dtcHJvZHVjdC9kZWJiN2M1ZTgyZjJiNjU4Y2ZmNzA1ZTg1N2FjOTcwYjgxLnBuZw==.webp",
+                        id: 0,
+                        message: "恭喜！你中了19朵香槟玫瑰加橙色泡泡！",
+                    },
+                    {
+                        name: "11朵草莓混搭巧克力泡泡小香风",
+                        pic: "http://p1.meituan.net/shangouproductapi/75bcfbc6cec1bf7ae5d503899bcc35d3229445.jpg@watermark=1&&object=L3dtcHJvZHVjdC9kZWJiN2M1ZTgyZjJiNjU4Y2ZmNzA1ZTg1N2FjOTcwYjgxLnBuZw==.webp",
+                        id: 1,
+                        message: "恭喜！你中了11朵草莓混搭巧克力泡泡小香风！",
+                    },
+                    {
+                        name: "11朵薄雾紫玫瑰",
+                        pic: "http://p0.meituan.net/shangouproductapi/9eff335dd000a42788e2a592abf565e1518662.jpg@watermark=1&&object=L3dtcHJvZHVjdC9kZWJiN2M1ZTgyZjJiNjU4Y2ZmNzA1ZTg1N2FjOTcwYjgxLnBuZw==.webp",
+                        id: 2,
+                        message: "恭喜！你中了11朵薄雾紫玫瑰！",
+                    },
+                    {
+                        name: "戴安娜33朵粉玫瑰",
+                        pic: "http://p1.meituan.net/shangouproductapi/4f21bf2c98a4c7288a6b0d5787bf77a7665467.jpg@watermark=1&&object=L3dtcHJvZHVjdC9kZWJiN2M1ZTgyZjJiNjU4Y2ZmNzA1ZTg1N2FjOTcwYjgxLnBuZw==.webp",
+                        id: 3,
+                        message: "恭喜！你中了戴安娜33朵粉玫瑰！",
+                    }
+                ], // 后台配置的奖品数据
+                prizeList2: [
+                    {
+                        name: "6英寸榴莲千层",
+                        pic: "http://p1.meituan.net/wmproduct/773e05c30d945fc3e2571304b8346fab427525.jpg.webp",
+                        id: 0,
+                        message: "恭喜！你中了6英寸榴莲千层！",
+                    },
+                    {
+                        name: "幸福平安果",
+                        pic: "http://p0.meituan.net/wmproduct/11f942e4d0628c886d6f9127c43613e2263563.jpg@750w_560h_1e_1c",
+                        id: 1,
+                        message: "恭喜！你中了幸福平安果！",
+                    },
+                    {
+                        name: "提拉米苏",
+                        pic: "http://p0.meituan.net/wmproduct/8a87a5f6dc889f1bc9f7f65236a85913393288.jpg.webp",
+                        id: 2,
+                        message: "恭喜！你中了提拉米苏！",
+                    }
+                ], // 后台配置的奖品数据
+                prizeList3: [
+                    {
+                        name: "海底捞200元代金券",
+                        pic: "https://img.meituan.net/content/fccd6c173c38cf0046046c0af38e558218710.jpg@387h_387w_2e_90Q.webp",
+                        id: 0,
+                        message: "恭喜！你中了海底捞200元代金券！",
+                    },
+                    {
+                        name: "米家便携即热饮水机",
+                        pic: "https://m.360buyimg.com/mobilecms/jfs/t1/237380/21/30283/59671/6759683fF832acc13/e8fd7f144b43ba83.jpg!q100",
+                        id: 1,
+                        message: "恭喜！你中了米家便携即热饮水机！",
+                    },
+                    {
+                        name: "零食大礼包",
+                        pic: "https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e75a3ebbbad14a1787a03fb9af3a3f9c~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=420&h=420&s=119769&e=png&a=1&b=fba276",
+                        id: 2,
+                        message: "恭喜！你中了零食大礼包！",
+                    }
+                ], // 后台配置的奖品数据
+                isRunning: false, // 是否正在抽奖
+                baseRunAngle: 360 * 5, // 总共转动角度 至少5圈
+                prizeInfo: [], // 中奖信息
+                transitionTime: 4,// 一次抽奖转盘转的时间,单位:秒
+                prizeWrap1: null,
+                prizeWrap2: null,
+                prizeWrap3: null
+            })
+            const prizeWrap1 = ref(null)
+            const prizeWrap2 = ref(null)
+            const prizeWrap3 = ref(null)
+            // 平均每个奖品角度
+            const rotateAngle1 = computed(() => 360 / state.prizeList1.length)
+            const rotateAngle2 = computed(() => 360 / state.prizeList2.length)
+            const rotateAngle3 = computed(() => 360 / state.prizeList3.length)
+            // 要执行总角度数
+            const totalRunAngle1 = computed(() => state.baseRunAngle + 360 - state.prizeInfo[0].id * rotateAngle1.value - rotateAngle1.value / 2)
+            const totalRunAngle2 = computed(() => state.baseRunAngle + 360 - state.prizeInfo[1].id * rotateAngle2.value - rotateAngle2.value / 2)
+            const totalRunAngle3 = computed(() => state.baseRunAngle + 360 - state.prizeInfo[2].id * rotateAngle3.value - rotateAngle3.value / 2)
+            // 计算绘制转盘背景
+            const bgColor1 = computed(() => {
+                let len = state.prizeList1.length
+                const colorList = ["#ecb0ec"];
+                let colorVal = "";
+                for (let i = 0; i < len; i++) {
+                    colorVal += `${colorList[i % 2]} ${rotateAngle1.value * i}deg ${
+                        rotateAngle1.value * (i + 1)
+                    }deg,`;
+                }
+                return `background: conic-gradient(${colorVal.slice(0, -1)});`;
+            })
+            const bgColor2 = computed(() => {
+                const len = state.prizeList2.length
+                const colorList = ["#ecb0ec"];
+                let colorVal = "";
+                for (let i = 0; i < len; i++) {
+                    colorVal += `${colorList[i % 2]} ${rotateAngle2.value * i}deg ${
+                        rotateAngle2.value * (i + 1)
+                    }deg,`;
+                }
+                return `background: conic-gradient(${colorVal.slice(0, -1)});`;
+            })
+            const bgColor3 = computed(() => {
+                const len = state.prizeList3.length
+                const colorList = ["#ecb0ec"];
+                let colorVal = "";
+                for (let i = 0; i < len; i++) {
+                    colorVal += `${colorList[i % 2]} ${rotateAngle3.value * i}deg ${
+                        rotateAngle3.value * (i + 1)
+                    }deg,`;
+                }
+                return `background: conic-gradient(${colorVal.slice(0, -1)});`;
+            })
+            // 每个奖品布局
+            const prizeStyle1 = computed(() => {
+                const degree = rotateAngle1.value
+                return (i) => {
+                    return `
+              width: ${2 * 240 * Math.sin(degree / 2 * Math.PI / 180)}px;
+              height: 240px;
+              transform: rotate(${degree * i + degree / 2}deg);
+              transform-origin: 50% 100%;
+            `
+                }
+            })
+            const prizeStyle2 = computed(() => {
+                const degree = rotateAngle2.value
+                return (i) => {
+                    return `
+              width: ${2 * 240 * Math.sin(degree / 2 * Math.PI / 180)}px;
+              height: 240px;
+              transform: rotate(${degree * i + degree / 2}deg);
+              transform-origin: 50% 100%;
+            `
+                }
+            })
+            const prizeStyle3 = computed(() => {
+                const degree = rotateAngle3.value
+                return (i) => {
+                    return `
+              width: ${2 * 240 * Math.sin(degree / 2 * Math.PI / 180)}px;
+              height: 240px;
+              transform: rotate(${degree * i + degree / 2}deg);
+              transform-origin: 50% 100%;
+            `
+                }
+            })
+            onMounted(() => {
+                prizeWrap1.value.style = `${bgColor1.value} transform: rotate(-${rotateAngle1.value / 2}deg)`
+                prizeWrap2.value.style = `${bgColor2.value} transform: rotate(-${rotateAngle2.value / 2}deg)`
+                prizeWrap3.value.style = `${bgColor3.value} transform: rotate(-${rotateAngle3.value / 2}deg)`
+            })
+            onUnmounted(() => {
+                prizeWrap1.value.removeEventListener('transitionend', stopRun)
+                prizeWrap2.value.removeEventListener('transitionend', stopRun)
+                prizeWrap3.value.removeEventListener('transitionend', stopRun)
+            })
+
+            const lotteryProbability1 = () => {
+                // 生成随机数，表示转盘停在的位置
+                const random = Math.random() * 100;
+
+                // 根据概率确定中奖结果
+                if (random < 25) {
+                    return state.prizeList1[3];
+                } else if (random < 50) {
+                    return state.prizeList1[0];
+                } else if (random < 75) {
+                    return state.prizeList1[1];
+                }else {
+                  return state.prizeList1[2];
+                }
+            }
+            const lotteryProbability2 = () => {
+                // 生成随机数，表示转盘停在的位置
+                const random = Math.random() * 100;
+
+                // 根据概率确定中奖结果
+                if (random <= 33) {
+                    return state.prizeList2[0];
+                } else if (random <= 66) {
+                    return state.prizeList2[1];
+                }else {
+                  return state.prizeList2[2];
+                }
+            }
+            const lotteryProbability3 = () => {
+                // 生成随机数，表示转盘停在的位置
+                const random = Math.random() * 100;
+
+                // 根据概率确定中奖结果
+                if (random < 5) {
+                    return state.prizeList3[0];
+                } else if (random < 15) {
+                    return state.prizeList3[1];
+                } else if (random < 45) {
+                    return state.prizeList3[2];
+                } else  if (random < 85) {
+                    return state.prizeList3[3];
+                } else {
+                  return state.prizeList3[4];
+                }
+            }
+
+            const start = () => {
+                if (!state.isRunning) {
+                    state.isRunning = true
+                    console.log('开始抽奖，后台请求中奖奖品')
+                    // 请求返回的奖品编号 这里使用随机数
+                    const prizeInfo1 = lotteryProbability1()
+                    const prizeInfo2 = lotteryProbability2()
+                    const prizeInfo3 = lotteryProbability3()
+                    state.prizeInfo[0] = prizeInfo1
+                    state.prizeInfo[1] = prizeInfo2
+                    state.prizeInfo[2] = prizeInfo3
+                    startRun()
+                }
+            }
+            const startRun = () => {
+                console.log(state.isRunning, totalRunAngle1.value)
+                // 设置动效
+                prizeWrap1.value.style = `
+            ${bgColor1.value}
+            
+            transform: rotate(${totalRunAngle1.value}deg);
+            transition: all ${state.transitionTime}s ease;
+          `
+                // 监听transition动效停止事件
+                prizeWrap2.value.addEventListener('transitionend', stopRun)
+                // 设置动效
+                prizeWrap2.value.style = `
+            ${bgColor2.value}
+            
+            transform: rotate(${totalRunAngle2.value}deg);
+            transition: all ${state.transitionTime}s ease;
+          `
+                // 监听transition动效停止事件
+                prizeWrap2.value.addEventListener('transitionend', stopRun)
+                // 设置动效
+                prizeWrap3.value.style = `
+            ${bgColor3.value}
+            
+            transform: rotate(${totalRunAngle3.value}deg);
+            transition: all ${state.transitionTime}s ease;
+          `
+                // 监听transition动效停止事件
+                prizeWrap3.value.addEventListener('transitionend', stopRun)
+            }
+            const stopRun = (e) => {
+                console.log(e)
+                state.isRunning = false
+                prizeWrap1.value.style = `
+            ${bgColor1.value}
+            transform: rotate(${totalRunAngle1.value - state.baseRunAngle}deg);
+          `
+          prizeWrap2.value.style = `
+            ${bgColor2.value}
+            transform: rotate(${totalRunAngle2.value - state.baseRunAngle}deg);
+          `
+          prizeWrap3.value.style = `
+            ${bgColor3.value}
+            transform: rotate(${totalRunAngle3.value - state.baseRunAngle}deg);
+          `
+            }
+            return {
+                ...toRefs(state),
+                bgColor1,
+                bgColor2,
+                bgColor3,
+                prizeStyle1,
+                prizeStyle2,
+                prizeStyle3,
+                prizeWrap1,
+                prizeWrap2,
+                prizeWrap3,
+                start
+            }
+        }
+    }).mount('#app')
+</script>
+</body>
+</html>

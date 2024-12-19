@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快乐</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Courgette&display=swap");
+
+        * {
+            box-sizing: border-box
+        }
+
+        html, body {
+            height: 100%;
+            font-family: "Courgette", cursive
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            overflow: hidden
+        }
+
+        .baloon {
+            height: calc(1.2 * var(--width));
+            width: var(--width);
+            border: 2px solid black;
+            border-radius: 50% 50% 50% 50%/45% 45% 55% 55%;
+            background-color: red;
+            position: absolute;
+            margin-bottom: 20px;
+            top: 100%;
+            -webkit-animation: animate 5s ease-in-out infinite;
+            animation: animate 5s ease-in-out infinite;
+            -webkit-animation-delay: calc(var(--animationDelay) * 0.15);
+            animation-delay: calc(var(--animationDelay) * 0.15);
+            z-index: 1;
+            opacity: 0.75
+        }
+
+        .baloon::before, .baloon::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            margin: auto;
+            border-radius: inherit;
+            opacity: 0.25
+        }
+
+        .baloon::before {
+            border-left: calc(var(--width) * 0.15) solid #ffffff;
+            left: 4px;
+            height: 100%;
+            width: calc(0.95 * var(--width))
+        }
+
+        .baloon::after {
+            height: 100%;
+            width: 80%;
+            right: 4px;
+            border-right: calc(var(--width) * 0.15) solid #000000
+        }
+
+        .baloon span {
+            display: inline-flex;
+            position: absolute;
+            height: calc(0.4 * var(--width));
+            width: calc(0.04 * var(--width));
+            top: 100%;
+            left: 0;
+            right: 0;
+            margin: auto;
+            background-image: inherit;
+            z-index: -1;
+            border-radius: 20px;
+            border: 2px solid black
+        }
+
+        .baloon span::before, .baloon span::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translatex(-50%);
+            border-radius: 4px;
+            background-image: inherit;
+            margin: auto;
+            width: calc(0.1 * var(--width));
+            height: calc(0.12 * var(--width));
+            border-radius: 500px;
+            border: 2px solid black
+        }
+
+        .baloon span::after {
+            top: calc(0.14 * var(--width));
+            width: calc(0.08 * var(--width));
+            height: calc(0.02 * var(--width))
+        }
+
+        .wishes {
+            font-size: 4rem;
+            color: #242423
+        }
+
+        @-webkit-keyframes animate {
+            from {
+                top: 100%
+            }
+            to {
+                top: -55%
+            }
+        }
+
+        @keyframes animate {
+            from {
+                top: 100%
+            }
+            to {
+                top: -55%
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="baloon"
+     style="--width:187px;--animationDelay:-1s;left:80%;background-image:linear-gradient(45deg,#E85D04,#FFBA08);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:113px;--animationDelay:1s;left:99%;background-image:linear-gradient(45deg,#ff3da4,#FB5607);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:164px;--animationDelay:2s;left:60%;background-image:linear-gradient(45deg,#f15156,#3A86FF);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:110px;--animationDelay:3s;left:54%;background-image:linear-gradient(45deg,#FFBE0B,#f15156);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:117px;--animationDelay:4s;left:63%;background-image:linear-gradient(45deg,#FF006E,#00a1de);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:188px;--animationDelay:8s;left:60%;background-image:linear-gradient(45deg,#DC2F02,#ff3da4);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:113px;--animationDelay:10s;left:82%;background-image:linear-gradient(45deg,#FFBE0B,#FB5607);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:104px;--animationDelay:9s;left:80%;background-image:linear-gradient(45deg,#E85D04,#FFBA08);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:143px;--animationDelay:14s;left:1%;background-image:linear-gradient(45deg,#f15156,#3A86FF);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:102px;--animationDelay:14s;left:12%;background-image:linear-gradient(45deg,#DC2F02,#FB5607);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:109px;--animationDelay:11s;left:78%;background-image:linear-gradient(45deg,#FFBA08,#3A86FF);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:162px;--animationDelay:11s;left:71%;background-image:linear-gradient(45deg,#8338EC,#00a1de);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:178px;--animationDelay:16s;left:25%;background-image:linear-gradient(45deg,#FF006E,#f15156);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:116px;--animationDelay:13s;left:72%;background-image:linear-gradient(45deg,#ff3da4,#DC2F02);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:162px;--animationDelay:22s;left:1%;background-image:linear-gradient(45deg,#E85D04,#FFBA08);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:122px;--animationDelay:27s;left:72%;background-image:linear-gradient(45deg,#00a1de,#FB5607);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:123px;--animationDelay:19s;left:84%;background-image:linear-gradient(45deg,#d177ff,#00a1de);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:188px;--animationDelay:22s;left:93%;background-image:linear-gradient(45deg,#DC2F02,#FB5607);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:135px;--animationDelay:30s;left:29%;background-image:linear-gradient(45deg,#d177ff,#FF006E);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:135px;--animationDelay:24s;left:27%;background-image:linear-gradient(45deg,#DC2F02,#FB5607);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:112px;--animationDelay:22s;left:59%;background-image:linear-gradient(45deg,#3A86FF,#FF006E);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:167px;--animationDelay:29s;left:3%;background-image:linear-gradient(45deg,#FF006E,#3A86FF);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:111px;--animationDelay:26s;left:74%;background-image:linear-gradient(45deg,#00a1de,#FFBE0B);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:126px;--animationDelay:43s;left:11%;background-image:linear-gradient(45deg,#ff3da4,#FFBA08);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:177px;--animationDelay:35s;left:23%;background-image:linear-gradient(45deg,#DC2F02,#d177ff);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:124px;--animationDelay:44s;left:61%;background-image:linear-gradient(45deg,#f15156,#FB5607);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:132px;--animationDelay:36s;left:2%;background-image:linear-gradient(45deg,#FF006E,#3A86FF);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:139px;--animationDelay:48s;left:39%;background-image:linear-gradient(45deg,#3A86FF,#FFBA08);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:143px;--animationDelay:50s;left:91%;background-image:linear-gradient(45deg,#8338EC,#ff3da4);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:123px;--animationDelay:39s;left:90%;background-image:linear-gradient(45deg,#f15156,#3A86FF);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:154px;--animationDelay:56s;left:44%;background-image:linear-gradient(45deg,#8338EC,#00a1de);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:157px;--animationDelay:47s;left:85%;background-image:linear-gradient(45deg,#f15156,#FFBA08);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:125px;--animationDelay:51s;left:47%;background-image:linear-gradient(45deg,#FFBE0B,#00a1de);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:102px;--animationDelay:60s;left:17%;background-image:linear-gradient(45deg,#FF006E,#ff3da4);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:170px;--animationDelay:62s;left:36%;background-image:linear-gradient(45deg,#FFBE0B,#8338EC);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:159px;--animationDelay:53s;left:12%;background-image:linear-gradient(45deg,#FFBE0B,#ff3da4);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:123px;--animationDelay:62s;left:59%;background-image:linear-gradient(45deg,#E85D04,#FFBE0B);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:146px;--animationDelay:51s;left:49%;background-image:linear-gradient(45deg,#FB5607,#FF006E);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:126px;--animationDelay:63s;left:65%;background-image:linear-gradient(45deg,#3A86FF,#f15156);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:150px;--animationDelay:39s;left:1%;background-image:linear-gradient(45deg,#FF006E,#FF006E);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:134px;--animationDelay:73s;left:97%;background-image:linear-gradient(45deg,#00a1de,#FFBA08);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:136px;--animationDelay:43s;left:30%;background-image:linear-gradient(45deg,#FB5607,#FF006E);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:155px;--animationDelay:74s;left:55%;background-image:linear-gradient(45deg,#FF006E,#d177ff);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:153px;--animationDelay:69s;left:92%;background-image:linear-gradient(45deg,#FB5607,#DC2F02);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:146px;--animationDelay:58s;left:67%;background-image:linear-gradient(45deg,#f15156,#00a1de);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:172px;--animationDelay:72s;left:44%;background-image:linear-gradient(45deg,#f15156,#DC2F02);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:156px;--animationDelay:69s;left:22%;background-image:linear-gradient(45deg,#d177ff,#DC2F02);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:127px;--animationDelay:91s;left:3%;background-image:linear-gradient(45deg,#3A86FF,#FFBE0B);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:101px;--animationDelay:94s;left:32%;background-image:linear-gradient(45deg,#d177ff,#3A86FF);">
+    <span></span></div>
+<div class="baloon"
+     style="--width:123px;--animationDelay:95s;left:85%;background-image:linear-gradient(45deg,#3A86FF,#E85D04);">
+    <span></span></div>
+<div class="wishes">Happy Birthday</div>
+</body>
+
+</html>
