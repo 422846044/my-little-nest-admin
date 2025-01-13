@@ -4,7 +4,7 @@
   </div>
 </template>
 <script setup>
-import { reactive, ref, onMounted, watch, inject } from "vue";
+import { reactive, ref, onMounted, watch } from "vue";
 import Editor from "@tinymce/tinymce-vue";
 import tinymce from "tinymce/tinymce";
 import "tinymce/themes/silver";
@@ -25,53 +25,9 @@ import "tinymce/plugins/lists"; //列
 import "tinymce/plugins/advlist"; //列
 import "tinymce/plugins/quickbars"; //快速工具条
 import "tinymce/plugins/wordcount"; // 字数统计插件
-import "tinymce/skins/content/default/content.css";
+import "tinymce/skins/content/default/content.css"
+import { uploadFile } from '../utils/qiniu'
 
-//引入七牛云
-import * as qiniu from 'qiniu-js'
-
-//引入uuid
-import { v4 as uuidv4 } from 'uuid'
-
-//上传图片 首先调取接口获取七牛云的token
-function uploadFile(file, resolve) {
-  const indexOfSuffix = file.name.lastIndexOf("."); //后缀名
-  const suffix = indexOfSuffix >= 0 ? file.name.substr(indexOfSuffix) : "";
-  var prefix = uuidv4().replace('-', '')
-  const filename = prefix + suffix; // uuid+后缀名
-  if (file) {
-    axios.get(`${import.meta.env.VITE_BASE_ADMIN_URL}/common/qiniu/getUploadToken`).then(res => {
-      if (res.data.result === true) {
-        const putExtra = { fname: "", params: {}, git: null };
-        const config = { useCdnDomain: true, region: qiniu.region.z2 };
-        let observable = qiniu.upload(
-          file, //要上传的文件对象。
-          filename, //上传到七牛云后的文件名或路径(也就是图片的后缀)。
-          res.data.data, //从服务器获取的七牛云上传凭证。
-          putExtra, //额外的设置参数，包括文件名、自定义参数和自定义变量。
-          config //配置参数，设置是否使用CDN加速和所选的七牛云存储区域。
-        );
-        observable.subscribe({
-          next: ((response) => {
-            if (response.total.percent >= 100) {
-              console.log('上传成功');
-            }
-          }),
-          error: ((err) => {
-            console.log(err)
-            console.log('上传失败,请稍后再试');
-          }),
-          complete: ((res) => {
-            resolve('http://tuchuang.dfwx.fun/' + res.key)
-          })
-        })
-      }
-    })
-  }
-}
-
-
-var axios = inject('$axios')
 const emits = defineEmits(["updateEditor"]);
 const props = defineProps({
   value: {

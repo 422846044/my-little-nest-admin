@@ -53,6 +53,13 @@ export function refreshToken(params){
      return http.get(`${admin}/refresh/refresh`,params)
 }
 
+// 获取七牛云上传凭证
+export function getQiniuyunToken(){
+     return http.get(`${admin}/common/qiniu/getUploadToken`)
+}
+
+
+
 //上传文件
 export function uploadObj(param){
      return http.post(`${admin}/common/uploadFile`,param)

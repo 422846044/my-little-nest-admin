@@ -15,7 +15,8 @@ let articleData = reactive({
   title: '',
   content: '',
   category: 0,
-  tags: []
+  tags: [],
+  cover:''
 })
 
 const makeReq = reactive({
@@ -76,8 +77,8 @@ function checkboxChange(checkList) {
   articleData.tags = checkList
 }
 
-function upload(file){
-  
+function upload(value){
+  articleData.cover = value;
 }
 
 const rules = reactive({

@@ -3,6 +3,7 @@ import { ref, reactive, onMounted } from 'vue'
 import MyEditor from './MyEditor.vue'
 import DictSelect from './DictSelect.vue'
 import DictCheckBox from './DictCheckBox.vue'
+import UploadPic from './UploadPic.vue'
 import {updateArticle, getArticleInfo, addArticleDraft} from '../api'
 import {ElMessage} from 'element-plus'
 import { useRoute } from 'vue-router'
@@ -20,6 +21,7 @@ onMounted(async ()=>{
       articleData.content = res.data.data.content
       articleData.category = res.data.data.category
       articleData.tags = res.data.data.tags
+      articleData.cover = res.data.data.cover
       articleData.status = res.data.data.status
       console.log(res.data.data)
     }
@@ -40,6 +42,7 @@ const articleData = reactive({
   content: '',
   category: '',
   tags:[],
+  cover:'',
   status: null
 })
 
@@ -48,6 +51,10 @@ articleData.id = articleId
 function updateEditor(value) {
   articleData.content = value;
   check(ruleFormRef.value,'content')
+}
+
+function upload(value){
+  articleData.cover = value;
 }
 
 const save = async (formEl) => {
@@ -145,8 +152,11 @@ const rules = reactive({
     <el-form-item label="标签" prop="tags">
       <DictCheckBox dictCode="wzbq" @checkboxChange="checkboxChange" :initValue="articleData.tags" :makeReq="makeReq.req"></DictCheckBox>
     </el-form-item>
+    <el-form-item label="封面" prop="cover">
+      <UploadPic @upload="upload" :value="articleData.cover"></UploadPic>
+    </el-form-item>
     <el-form-item label="文章内容" prop="content">
-      <div >
+      <div>
         <MyEditor @updateEditor="updateEditor" :value="articleData.content" style="min-width: 100%;"></MyEditor>
       </div>
     </el-form-item>
