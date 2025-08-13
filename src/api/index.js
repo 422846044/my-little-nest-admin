@@ -104,6 +104,11 @@ export function simpleUserInfoQuery(params){
      return http.get(`${admin}/admin/user/getSimpleUserInfoByUserId`,params)
 }
 
+//服务监控信息
+export function serverMonitorInfoQuery(){
+     return http.get(`${admin}/monitor/server`)
+}
+
 // put 请求
 export function putSomeAPI(params){
      return http.put(`${resquest}/putSome.json`,params)

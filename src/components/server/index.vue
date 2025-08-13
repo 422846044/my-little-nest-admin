@@ -1,220 +1,6 @@
-<script setup>
-import { ref, reactive, onMounted } from 'vue'
-import {ElMessage} from 'element-plus'
-import {getHomeDataCount, serverMonitorInfoQuery} from '../api'
-import { useTransition } from '@vueuse/core';
-
-const info = reactive({
-  allCount: 100,
-  monthCount: 10,
-  monthCountThan: 10,
-  dayCount: 0,
-  dayCountThan: 0,
-  draftCount: -1
-})
-
-const server = reactive({
-    "cpu": {
-        "cpuNum": 12,
-        "total": 1199700,
-        "sys": 23.44,
-        "used": 5.32,
-        "wait": 0,
-        "free": 70.59
-    },
-    "mem": {
-        "total": 31.39,
-        "used": 23.58,
-        "free": 7.81,
-        "usage": 75.12
-    },
-    "jvm": {
-        "total": 802.5,
-        "max": 7143.5,
-        "free": 528.46,
-        "version": "1.8.0_391",
-        "home": "D:\\Program Files\\Java\\jdk-1.8\\jre",
-        "name": "Java HotSpot(TM) 64-Bit Server VM",
-        "used": 274.04,
-        "startTime": "2025-08-13 18:15:34",
-        "usage": 34.15,
-        "inputArgs": "[-agentlib:jdwp=transport=dt_socket,address=127.0.0.1:5380,suspend=y,server=n, -Djasypt.encryptor.password=z422846044, -XX:TieredStopAtLevel=1, -Xverify:none, -Dspring.output.ansi.enabled=always, -Dcom.sun.management.jmxremote, -Dspring.jmx.enabled=true, -Dspring.liveBeansView.mbeanDomain, -Dspring.application.admin.enabled=true, -Dmanagement.endpoints.jmx.exposure.include=*, -javaagent:C:\\Users\\Administrator\\AppData\\Local\\JetBrains\\IntelliJIdea2023.3\\captureAgent\\debugger-agent.jar=file:/C:/Users/Administrator/AppData/Local/Temp/capture.props, -Dfile.encoding=UTF-8]",
-        "runTime": "0天0小时9分钟"
-    },
-    "sys": {
-        "computerName": "DESKTOP-VM40J4T",
-        "computerIp": "192.168.2.6",
-        "userDir": "D:\\CodeProject\\my-little-nest-server",
-        "osName": "Windows 10",
-        "osArch": "amd64"
-    },
-    "sysFiles": [
-        {
-            "dirName": "C:\\",
-            "sysTypeName": "NTFS",
-            "typeName": "本地固定磁盘 (C:)",
-            "total": "100.0 GB",
-            "free": "1.9 GB",
-            "used": "98.1 GB",
-            "usage": 98.12
-        },
-        {
-            "dirName": "D:\\",
-            "sysTypeName": "NTFS",
-            "typeName": "本地固定磁盘 (D:)",
-            "total": "376.8 GB",
-            "free": "250.2 GB",
-            "used": "126.6 GB",
-            "usage": 33.6
-        }
-    ]
-})
-
-const allCount = ref(0)
-const allCountT = useTransition(allCount,{duration: 1000});
-
-const monthCount = ref(0)
-const monthCountT = useTransition(monthCount,{duration: 1000});
-
-const dayCount = ref(0)
-const dayCountT = useTransition(dayCount,{duration: 1000});
-
-const draftCount = ref(0)
-const draftCountT = useTransition(draftCount,{duration: 1000});
-
-
-onMounted(()=>{
-  getHomeDataCount()
-  .then(res=>{
-    if(res.data.success){
-        allCount.value = res.data.data.allCount
-        monthCount.value = res.data.data.monthCount
-        info.monthCountThan = res.data.data.monthCountThan
-        dayCount.value = res.data.data.dayCount
-        info.dayCountThan = res.data.data.dayCountThan
-        draftCount.value = res.data.data.draftCount
-    }
-  })
-  serverMonitorInfoQuery()
-  .then(res=>{
-    if(res.data.code=200){
-      
-    console.log(res.data.data)
-      server.cpu = res.data.data.cpu
-      server.jvm = res.data.data.jvm
-      server.mem = res.data.data.mem
-      server.sys = res.data.data.sys
-      server.sysFiles = res.data.data.sysFiles
-    }
-  })
-})
-
-</script>
-
 <template>
- <el-row :gutter="16">
-    <el-col :span="6">
-      <div class="statistic-card">
-        <el-statistic :value="allCountT">
-          <template #title>
-            <div style="display: inline-flex; align-items: center">
-              文章总数量
-              <el-tooltip
-                effect="dark"
-                content="前台可查看的文章总数量"
-                placement="top"
-              >
-                <el-icon style="margin-left: 4px" :size="12">
-                  <Warning />
-                </el-icon>
-              </el-tooltip>
-            </div>
-          </template>
-        </el-statistic>
-        
-      </div>
-    </el-col>
-    <el-col :span="6">
-      <div class="statistic-card">
-        <el-statistic :value="monthCountT">
-          <template #title>
-            <div style="display: inline-flex; align-items: center">
-              本月发布文章数量
-              <el-tooltip
-                effect="dark"
-                content="本月发布前台可查看文章总数量"
-                placement="top"
-              >
-                <el-icon style="margin-left: 4px" :size="12">
-                  <Warning />
-                </el-icon>
-              </el-tooltip>
-            </div>
-          </template>
-        </el-statistic>
-        <div class="statistic-footer">
-          <div class="footer-item">
-            <span>较上月</span>
-            <span :class="info.monthCountThan >= 0 ? 'green':'red'">
-              {{info.monthCountThan}}%
-              <el-icon>
-                <CaretTop v-if="info.monthCountThan >= 0"/>
-                  <CaretBottom v-if="info.monthCountThan < 0"/>
-              </el-icon>
-            </span>
-          </div>
-        </div>
-      </div>
-    </el-col>
-    <el-col :span="6">
-      <div class="statistic-card">
-        <el-statistic :value="dayCountT">
-          <template #title>
-            <div style="display: inline-flex; align-items: center">
-              今日发布文章数量
-              <el-tooltip
-                effect="dark"
-                content="今日新发布前台可查看文章总数量"
-                placement="top"
-              >
-                <el-icon style="margin-left: 4px" :size="12">
-                  <Warning />
-                </el-icon>
-              </el-tooltip>
-            </div>
-          </template>
-        </el-statistic>
-        <div class="statistic-footer">
-          <div class="footer-item">
-            <span>较昨天</span>
-            <span :class="info.dayCountThan >= 0 ? 'green':'red'">
-              {{info.dayCountThan}}%
-              <el-icon>
-                <CaretTop v-if="info.dayCountThan >= 0"/>
-                  <CaretBottom v-if="info.dayCountThan < 0"/>
-              </el-icon>
-            </span>
-          </div>
-        </div>
-      </div>
-    </el-col>
-    <el-col :span="6">
-      <div class="statistic-card">
-        <el-statistic :value="draftCountT" title="New transactions today">
-          <template #title>
-            <div style="display: inline-flex; align-items: center">
-             草稿数量
-            </div>
-          </template>
-        </el-statistic>
-        <div class="statistic-footer">
-          
-        
-        </div>
-      </div>
-    </el-col>
-  </el-row >
-    <el-row class="statistic-card">
+  <div class="app-container">
+    <el-row>
       <el-col :span="12" class="card-box">
         <el-card>
           <div slot="header"><span><i class="el-icon-cpu"></i> CPU</span></div>
@@ -386,59 +172,36 @@ onMounted(()=>{
         </el-card>
       </el-col>
     </el-row>
+  </div>
 </template>
 
-<style scoped>
-:global(h2#card-usage ~ .example .example-showcase) {
-  background-color: var(--el-fill-color) !important;
-}
+<script>
+import { getServer } from "@/api/monitor/server";
 
-.el-statistic {
-  --el-statistic-content-font-size: 28px;
-}
-
-.statistic-card {
-  height: 100%;
-  padding: 20px;
-  border-radius: 4px;
-  background-color: var(--el-bg-color-overlay);
-}
-
-.statistic-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  font-size: 12px;
-  color: var(--el-text-color-regular);
-  margin-top: 16px;
-}
-
-.statistic-footer .footer-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.statistic-footer .footer-item span:last-child {
-  display: inline-flex;
-  align-items: center;
-  margin-left: 4px;
-}
-
-
-.green {
-  color: var(--el-color-success);
-}
-.red {
-  color: var(--el-color-error);
-}
-
-::v-deep .el-card {
-  box-shadow: none !important;
-  border: none !important;
-}
-::v-deep .el-card__body{
-  padding: 0 0 0 0 !important;
-}
-</style>
+export default {
+  name: "Server",
+  data() {
+    return {
+      // 服务器信息
+      server: []
+    };
+  },
+  created() {
+    this.getList();
+    this.openLoading();
+  },
+  methods: {
+    /** 查询服务器信息 */
+    getList() {
+      getServer().then(response => {
+        this.server = response.data;
+        this.$modal.closeLoading();
+      });
+    },
+    // 打开加载层
+    openLoading() {
+      this.$modal.loading("正在加载服务监控数据，请稍候！");
+    }
+  }
+};
+</script>
