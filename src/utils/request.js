@@ -15,7 +15,11 @@ const service = axios.create({
 
 // 2.请求拦截器
 service.interceptors.request.use(config => {
-    showLoading();
+    console.log(config.params)
+    if(!config.params || !config.params.notLoading){
+        showLoading();
+    }
+
     //发请求前做的一些处理，数据转化，配置请求头，设置token,设置loading等，根据需求去添加
     config.data = JSON.stringify(config.data); //数据转化,也可以使用qs转换
     config.headers = {
@@ -45,7 +49,7 @@ service.interceptors.response.use( async (response) => {
     setTimeout(() => {
         hideLoading()
     }, 200)
-    if (!response.data.success) {
+    if (response.data.code != 200) {
         ElMessage.error(response.data.message)
     } else if (response.data.code === 402) {
         // 登录凭证过期

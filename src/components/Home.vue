@@ -1,6 +1,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import {ElMessage} from 'element-plus'
+import { showLoading, hideLoading } from '../utils/loading.js'
 import {getHomeDataCount, serverMonitorInfoQuery} from '../api'
 import { useTransition } from '@vueuse/core';
 
@@ -15,57 +16,57 @@ const info = reactive({
 
 const server = reactive({
     "cpu": {
-        "cpuNum": 12,
-        "total": 1199700,
-        "sys": 23.44,
-        "used": 5.32,
-        "wait": 0,
-        "free": 70.59
+        "cpuNum": '.....',
+        "total": '.....',
+        "sys": '.....',
+        "used": '.....',
+        "wait": '.....',
+        "free": '.....'
     },
     "mem": {
-        "total": 31.39,
-        "used": 23.58,
-        "free": 7.81,
-        "usage": 75.12
+        "total": '.....',
+        "used": '.....',
+        "free": '.....',
+        "usage": '.....'
     },
     "jvm": {
-        "total": 802.5,
-        "max": 7143.5,
-        "free": 528.46,
-        "version": "1.8.0_391",
-        "home": "D:\\Program Files\\Java\\jdk-1.8\\jre",
-        "name": "Java HotSpot(TM) 64-Bit Server VM",
-        "used": 274.04,
-        "startTime": "2025-08-13 18:15:34",
-        "usage": 34.15,
-        "inputArgs": "[-agentlib:jdwp=transport=dt_socket,address=127.0.0.1:5380,suspend=y,server=n, -Djasypt.encryptor.password=z422846044, -XX:TieredStopAtLevel=1, -Xverify:none, -Dspring.output.ansi.enabled=always, -Dcom.sun.management.jmxremote, -Dspring.jmx.enabled=true, -Dspring.liveBeansView.mbeanDomain, -Dspring.application.admin.enabled=true, -Dmanagement.endpoints.jmx.exposure.include=*, -javaagent:C:\\Users\\Administrator\\AppData\\Local\\JetBrains\\IntelliJIdea2023.3\\captureAgent\\debugger-agent.jar=file:/C:/Users/Administrator/AppData/Local/Temp/capture.props, -Dfile.encoding=UTF-8]",
-        "runTime": "0天0小时9分钟"
+        "total": '.....',
+        "max": '.....',
+        "free": '.....',
+        "version": '.....',
+        "home": '.....',
+        "name": '.....',
+        "used": '.....',
+        "startTime": '.....',
+        "usage": '.....',
+        "inputArgs": '.....',
+        "runTime": '.....'
     },
     "sys": {
-        "computerName": "DESKTOP-VM40J4T",
-        "computerIp": "192.168.2.6",
-        "userDir": "D:\\CodeProject\\my-little-nest-server",
-        "osName": "Windows 10",
-        "osArch": "amd64"
+        "computerName": '.....',
+        "computerIp": '.....',
+        "userDir": '.....',
+        "osName": '.....',
+        "osArch": '.....'
     },
     "sysFiles": [
         {
-            "dirName": "C:\\",
-            "sysTypeName": "NTFS",
-            "typeName": "本地固定磁盘 (C:)",
-            "total": "100.0 GB",
-            "free": "1.9 GB",
-            "used": "98.1 GB",
-            "usage": 98.12
+            "dirName": '.....',
+            "sysTypeName": '.....',
+            "typeName": '.....',
+            "total": '.....',
+            "free": '.....',
+            "used": '.....',
+            "usage": '.....'
         },
         {
-            "dirName": "D:\\",
-            "sysTypeName": "NTFS",
-            "typeName": "本地固定磁盘 (D:)",
-            "total": "376.8 GB",
-            "free": "250.2 GB",
-            "used": "126.6 GB",
-            "usage": 33.6
+            "dirName": '.....',
+            "sysTypeName": '.....',
+            "typeName": '.....',
+            "total": '.....',
+            "free": '.....',
+            "used": '.....',
+            "usage": '.....'
         }
     ]
 })
@@ -84,9 +85,10 @@ const draftCountT = useTransition(draftCount,{duration: 1000});
 
 
 onMounted(()=>{
+  showLoading()
   getHomeDataCount()
   .then(res=>{
-    if(res.data.success){
+    if(res.data.code==200){
         allCount.value = res.data.data.allCount
         monthCount.value = res.data.data.monthCount
         info.monthCountThan = res.data.data.monthCountThan
@@ -97,16 +99,24 @@ onMounted(()=>{
   })
   serverMonitorInfoQuery()
   .then(res=>{
-    if(res.data.code=200){
-      
-    console.log(res.data.data)
-      server.cpu = res.data.data.cpu
-      server.jvm = res.data.data.jvm
-      server.mem = res.data.data.mem
-      server.sys = res.data.data.sys
-      server.sysFiles = res.data.data.sysFiles
+    if(res.data.code==200){
+      // server.cpu = res.data.data.cpu
+      // server.jvm = res.data.data.jvm
+      // server.mem = res.data.data.mem
+      // server.sys = res.data.data.sys
+      // server.sysFiles = res.data.data.sysFiles
+      Object.assign(server, res.data.data)
+      setInterval(function(){
+        serverMonitorInfoQuery({notLoading: true})
+        .then(res=>{
+          if(res.data.code==200){
+            Object.assign(server, res.data.data)
+          }
+        })
+      }, 2000)
     }
   })
+  hideLoading()
 })
 
 </script>

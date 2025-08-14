@@ -101,7 +101,7 @@ const onLogin = async (formEl)=>{
     /* 视窗宽度 */
     height: 100vh;
     /* 视窗高度 */
-    background-image: url('../assets/login_background.jpeg');
+    background-image: url('http://cdn.zhongyingjie.top/public/static/admin/login_background.jpeg');
     background-position: center center;
     background-size: cover;
 }

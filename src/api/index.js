@@ -3,7 +3,7 @@ import http from '../utils/http'
  *  @parms resquest 请求地址 例如：http://197.82.15.15:8088/request/...
  *  @param '/testIp'代表vue-cil中config，index.js中配置的代理
  */
- let nest = import.meta.env.VITE_BASE_URL
+
  let admin = import.meta.env.VITE_BASE_ADMIN_URL
 
  //登录
@@ -65,33 +65,6 @@ export function uploadObj(param){
      return http.post(`${admin}/common/uploadFile`,param)
 }
 
-
- //道聚城日志查询
-export function djcTaskQuery(params){
-     return http.get(`${nest}/djc/task/query`,params)
-}
-
-//道聚城token更新
-export function djcUpdateToken(params){
-     return http.get(`${nest}/djc/task/updateToken`,params)
-}
-
-//道聚城任务重试
-export function djcTaskRetry(params){
-     return http.get(`${nest}/djc/task/retryTask`,params)
-}
-
-
-
-//文章列表查询
-export function articleListQuery(params){
-     return http.get(`${nest}/article/getArticleByPage`,params)
-}
-
-//文章信息获取
-export function articleInfoQuery(params){
-     return http.get(`${nest}/article/getArticleInfoById`,params)
-}
 
 //数据字典表查询
 export function dictMapQuery(params){

@@ -22,7 +22,7 @@ const logout = ()=>{
     <div class="flex-grow" />
     <el-sub-menu index="" style="padding: 0 0 0 0;">
       <template #title>
-        <img style="width: 50px;border-radius:50%;margin: 5px;" src="/src/assets/logo.jpg" alt="logo" />
+        <img style="width: 36px;border-radius:50%;margin: 5px;" src="http://cdn.zhongyingjie.top/public/static/admin/logo.jpg" alt="logo" />
       </template>
       
       <el-menu-item @click="logout()">
