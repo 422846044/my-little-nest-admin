@@ -97,23 +97,18 @@ onMounted(()=>{
         draftCount.value = res.data.data.draftCount
     }
   })
-  serverMonitorInfoQuery()
+  serverMonitorInfoQuery({})
   .then(res=>{
     if(res.data.code==200){
-      // server.cpu = res.data.data.cpu
-      // server.jvm = res.data.data.jvm
-      // server.mem = res.data.data.mem
-      // server.sys = res.data.data.sys
-      // server.sysFiles = res.data.data.sysFiles
       Object.assign(server, res.data.data)
       setInterval(function(){
-        serverMonitorInfoQuery({notLoading: true})
+        serverMonitorInfoQuery({noLoading: true})
         .then(res=>{
           if(res.data.code==200){
             Object.assign(server, res.data.data)
           }
         })
-      }, 2000)
+      }, 3600)
     }
   })
   hideLoading()

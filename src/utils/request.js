@@ -15,10 +15,10 @@ const service = axios.create({
 
 // 2.请求拦截器
 service.interceptors.request.use(config => {
-    console.log(config.params)
-    if(!config.params || !config.params.notLoading){
+    if(!config.noLoading){
         showLoading();
     }
+    
 
     //发请求前做的一些处理，数据转化，配置请求头，设置token,设置loading等，根据需求去添加
     config.data = JSON.stringify(config.data); //数据转化,也可以使用qs转换

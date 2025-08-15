@@ -74,11 +74,11 @@ const tinymceId = ref(
 );
 const init = reactive({
   selector: "#" + tinymceId.value, //富文本编辑器的id,
-  language_url: "/tinymce/langs/zh-Hans.js", // 语言包的路径，具体路径看自己的项目，文档后面附上中文js文件
+  language_url: "tinymce/langs/zh-Hans.js", // 语言包的路径，具体路径看自己的项目，文档后面附上中文js文件
   language: "zh-Hans", //语言
   promotion: false, //隐藏右上角Upgrade 按钮
-  skin_url: "/tinymce/skins/ui/oxide", // skin路径，具体路径看自己的项目
-  content_css: "/tinymce/skins/content/default/content.css",
+  skin_url: "tinymce/skins/ui/oxide", // skin路径，具体路径看自己的项目
+  content_css: "tinymce/skins/content/default/content.css",
   menubar: true, //顶部菜单栏显示
   statusbar: true, // 底部的状态栏
   plugins: props.plugins,

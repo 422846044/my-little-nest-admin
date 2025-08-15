@@ -11,9 +11,16 @@ const http ={
     get(url,params){
         const config = {
             method: 'get',
-            url:url
+            url:url,
+            noLoading: false
         }
-        if(params) config.params = params
+        if(params){
+            config.params = params
+            if(params.noLoading){
+                config.noLoading = true
+                delete params.noLoading
+            }
+        } 
         return request(config)
     },
     post(url,params){

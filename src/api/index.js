@@ -78,8 +78,8 @@ export function simpleUserInfoQuery(params){
 }
 
 //服务监控信息
-export function serverMonitorInfoQuery(){
-     return http.get(`${admin}/monitor/server`)
+export function serverMonitorInfoQuery(params){
+     return http.get(`${admin}/monitor/server`,params)
 }
 
 // put 请求
