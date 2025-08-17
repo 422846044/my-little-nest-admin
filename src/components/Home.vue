@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, onBeforeUnmount } from 'vue'
 import {ElMessage} from 'element-plus'
 import { showLoading, hideLoading } from '../utils/loading.js'
 import {getHomeDataCount, serverMonitorInfoQuery} from '../api'
@@ -83,6 +83,7 @@ const dayCountT = useTransition(dayCount,{duration: 1000});
 const draftCount = ref(0)
 const draftCountT = useTransition(draftCount,{duration: 1000});
 
+let timer = null  
 
 onMounted(()=>{
   showLoading()
@@ -101,17 +102,21 @@ onMounted(()=>{
   .then(res=>{
     if(res.data.code==200){
       Object.assign(server, res.data.data)
-      setInterval(function(){
+      timer = setInterval(function(){
         serverMonitorInfoQuery({noLoading: true})
         .then(res=>{
           if(res.data.code==200){
             Object.assign(server, res.data.data)
           }
         })
-      }, 3600)
+      }, 5000)
     }
   })
   hideLoading()
+})
+
+onBeforeUnmount(()=>{
+  clearInterval(timer)
 })
 
 </script>

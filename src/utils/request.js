@@ -51,7 +51,8 @@ service.interceptors.response.use( async (response) => {
     }, 200)
     if (response.data.code != 200) {
         ElMessage.error(response.data.message)
-    } else if (response.data.code === 402) {
+    } 
+    if (response.data.code === 402) {
         // 登录凭证过期
         // 清除cookie 跳转登录页面
         let refreshTokenStr = localStorage.getItem('refresh_token')
