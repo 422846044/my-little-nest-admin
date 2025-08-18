@@ -82,6 +82,11 @@ export function serverMonitorInfoQuery(params){
      return http.get(`${admin}/monitor/server`,params)
 }
 
+//添加字典参数
+export function addDictDetail(dictCode, detailName){
+     return http.post(`${admin}/dict/detail/info/${dictCode}/${detailName}`)
+}
+
 // put 请求
 export function putSomeAPI(params){
      return http.put(`${resquest}/putSome.json`,params)

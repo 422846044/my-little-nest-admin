@@ -4,19 +4,22 @@ import MyEditor from './MyEditor.vue'
 import DictSelect from './DictSelect.vue'
 import DictCheckBox from './DictCheckBox.vue'
 import UploadPic from './UploadPic.vue'
-import { addArticle, addArticleDraft } from '../api'
-import { ElMessage } from 'element-plus'
+import { addArticle, addArticleDraft, addDictDetail } from '../api'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 
 
 const ruleFormRef = ref()
+
+const categoryComponentKey = ref(0)
+const tagComponentKey = ref(0)
 
 let articleData = reactive({
   title: '',
   content: '',
   category: 0,
   tags: [],
-  cover:''
+  cover: ''
 })
 
 const makeReq = reactive({
@@ -77,7 +80,7 @@ function checkboxChange(checkList) {
   articleData.tags = checkList
 }
 
-function upload(value){
+function upload(value) {
   articleData.cover = value;
 }
 
@@ -94,7 +97,67 @@ const rules = reactive({
 })
 
 
+const addTag = () => {
+  ElMessageBox.prompt('请输入标签名称', '添加标签', {
+    confirmButtonText: '添加',
+    cancelButtonText: '取消',
+  })
+    .then(({ value }) => {
+      addDictDetail('wzbq', value)
+        .then(res => {
+          if (res.data.code == 200) {
+            ElMessage({
+              type: 'success',
+              message: `添加成功`,
+            })
+            // 刷新标签数据
+            tagComponentKey.value+=1
+          } else {
+            ElMessage({
+              type: 'error',
+              message: res.data.message
+            })
+          }
+        })
+    })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: '取消添加',
+      })
+    })
+}
 
+const addCategory = () => {
+  ElMessageBox.prompt('请输入分类名称', '添加分类', {
+    confirmButtonText: '添加',
+    cancelButtonText: '取消',
+  })
+    .then(({ value }) => {
+      addDictDetail('wzfl', value)
+        .then(res => {
+          if (res.data.code == 200) {
+            ElMessage({
+              type: 'success',
+              message: `添加成功`,
+            })
+            // 刷新分类数据
+            categoryComponentKey.value+=1
+          } else {
+            ElMessage({
+              type: 'error',
+              message: res.data.message
+            })
+          }
+        })
+    })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: '取消添加',
+      })
+    })
+}
 
 
 </script>
@@ -105,10 +168,17 @@ const rules = reactive({
       <el-input v-model="articleData.title" placeholder="请输入标题" />
     </el-form-item>
     <el-form-item label="分类" prop="category">
-      <DictSelect placeholder="请选择分类" dictCode="wzfl" :makeReq="makeReq.req" @selectChange="selectChange"></DictSelect>
+      <el-space>
+        <DictSelect placeholder="请选择分类" dictCode="wzfl" :makeReq="makeReq.req" @selectChange="selectChange" :key="categoryComponentKey">
+        </DictSelect>
+        <el-button type="primary" text @click="addCategory">新增分类</el-button>
+      </el-space>
     </el-form-item>
     <el-form-item label="标签" prop="tags">
-      <DictCheckBox dictCode="wzbq" @checkboxChange="checkboxChange" :makeReq="makeReq.req"></DictCheckBox>
+      <el-space>
+        <DictCheckBox dictCode="wzbq" @checkboxChange="checkboxChange" :makeReq="makeReq.req" :key="tagComponentKey"></DictCheckBox>
+        <el-button type="primary" text @click="addTag">新增标签</el-button>
+      </el-space>
     </el-form-item>
     <el-form-item label="封面" prop="cover">
       <UploadPic @upload="upload"></UploadPic>
@@ -125,6 +195,4 @@ const rules = reactive({
   </el-form>
 </template>
 
-<style>
-
-</style>
+<style></style>
