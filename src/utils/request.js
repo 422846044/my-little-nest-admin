@@ -15,10 +15,10 @@ const service = axios.create({
 
 // 2.请求拦截器
 service.interceptors.request.use(config => {
-    if(!config.noLoading){
+    if (!config.noLoading) {
         showLoading();
     }
-    
+
 
     //发请求前做的一些处理，数据转化，配置请求头，设置token,设置loading等，根据需求去添加
     config.data = JSON.stringify(config.data); //数据转化,也可以使用qs转换
@@ -32,10 +32,10 @@ service.interceptors.request.use(config => {
     //config.headers.token= token; //如果要求携带在请求头中
     //}
     const token = localStorage.getItem('access_token');
-    if(token != null && token != undefined){
+    if (token != null && token != undefined) {
         config.headers.Authorization = token
     }
-    
+
     return config
 }, error => {
     Promise.reject(error)
@@ -44,14 +44,11 @@ service.interceptors.request.use(config => {
 
 
 // 3.响应拦截器
-service.interceptors.response.use( async (response) => {
+service.interceptors.response.use(async (response) => {
     //接收到响应数据并成功后的一些共有的处理，关闭loading等
     setTimeout(() => {
         hideLoading()
     }, 200)
-    if (response.data.code != 200) {
-        ElMessage.error(response.data.message)
-    } 
     if (response.data.code === 402) {
         // 登录凭证过期
         // 清除cookie 跳转登录页面
@@ -60,19 +57,26 @@ service.interceptors.response.use( async (response) => {
             localStorage.removeItem('access_token')
             // 获取刷新token
             await refreshToken({ 'refreshToken': refreshTokenStr }).then(async (res) => {
-                if (res.data.success) {
+                if (res.data.code == 200) {
                     let tokenInfo = res.data.data
                     response.config.headers.Authorization = tokenInfo.accessToken
                     localStorage.setItem('access_token', tokenInfo.accessToken)
                     localStorage.setItem('refresh_token', tokenInfo.refreshToken)
                     response = await service.request(response.config)
+                } else {
+                    localStorage.removeItem('access_token')
+                    localStorage.removeItem('refresh_token')
+                    window.location.href = "/management/login"
+                    ElMessage.error(response.data.message)
                 }
             })
         } else {
             localStorage.removeItem('access_token')
             localStorage.removeItem('refresh_token')
-            window.location.href = "/login"
+            window.location.href = "/management/login"
         }
+    }else if (response.data.code != 200) {
+        ElMessage.error(response.data.message)
     }
     return response
 }, error => {
