@@ -13,17 +13,17 @@ export function login(params){
 
 //添加文章
 export function addArticle(params){
-     return http.post(`${admin}/article/addArticle`,params)
+     return http.post(`${admin}/article/info`,params)
 }
 
 // 添加文章草稿
 export function addArticleDraft(params){
-     return http.post(`${admin}/article/addArticleDraft`,params)
+     return http.post(`${admin}/article/info/draft`,params)
 }
 
 // 更新文章
 export function updateArticle(params){
-     return http.put(`${admin}/article/updateArticle`,params)
+     return http.put(`${admin}/article/info`,params)
 }
 
 
@@ -34,7 +34,7 @@ export function getDictMapByDictCode(params){
 
 //查询首页数据统计
 export function getHomeDataCount(){ 
-     return http.get(`${admin}/article/dataCount`)
+     return http.get(`${admin}/article/data/count`)
 }
 
 //查询文章列表
@@ -46,6 +46,12 @@ export function getArticleListByPage(params){
 export function getArticleInfo(params){
      let articleId = encodeURIComponent(params)
      return http.get(`${admin}/article/info/${articleId}`)
+}
+
+// 删除文章信息
+export function delArticleInfo(params){
+     //let articleId = encodeURIComponent(params)
+     return http.delete(`${admin}/article/info/${params}`)
 }
 
 //刷新凭证接口

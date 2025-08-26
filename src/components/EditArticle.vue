@@ -21,6 +21,7 @@ onMounted(async ()=>{
     if(res.data.success){
       articleData.title = res.data.data.title
       articleData.content = res.data.data.content
+      articleData.summary = res.data.data.summary
       articleData.category = res.data.data.category
       articleData.tags = res.data.data.tags
       articleData.cover = res.data.data.cover
@@ -41,6 +42,7 @@ const makeReq = reactive({
 
 const articleData = reactive({
   title: '',
+  summary: '',
   content: '',
   category: '',
   tags:[],
@@ -207,6 +209,9 @@ const addCategory = () => {
   <el-form label-position="top" :model="articleData" :rules="rules" ref="ruleFormRef">
     <el-form-item label="标题" prop="title">
       <el-input v-model="articleData.title" placeholder="请输入标题" />
+    </el-form-item>
+    <el-form-item label="概要" prop="summary">
+      <el-input v-model="articleData.summary" placeholder="请输入概要" />
     </el-form-item>
     <el-form-item label="分类" prop="category">
       <el-space>

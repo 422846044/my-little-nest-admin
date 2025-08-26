@@ -16,6 +16,7 @@ const tagComponentKey = ref(0)
 
 let articleData = reactive({
   title: '',
+  summary: '',
   content: '',
   category: 0,
   tags: [],
@@ -166,6 +167,9 @@ const addCategory = () => {
   <el-form label-position="top" :model="articleData" :rules="rules" ref="ruleFormRef">
     <el-form-item label="标题" prop="title">
       <el-input v-model="articleData.title" placeholder="请输入标题" />
+    </el-form-item>
+    <el-form-item label="概要" prop="summary">
+      <el-input v-model="articleData.summary" placeholder="请输入概要" />
     </el-form-item>
     <el-form-item label="分类" prop="category">
       <el-space>

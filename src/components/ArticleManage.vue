@@ -1,7 +1,7 @@
 <script setup>
 import { reactive,ref, onMounted } from 'vue'
 import DictSelect from '../components/DictSelect.vue'
-import { getArticleListByPage } from '../api'
+import { getArticleListByPage, delArticleInfo } from '../api'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import {useRoute,useRouter} from 'vue-router'
 
@@ -62,7 +62,15 @@ function handleDelete(row){
     ElMessageBox.confirm('是否确认删除?','提示',{confirmButtonText: '确认',cancelButtonText: '取消',type: 'warning'})
     .then(()=>{
         // 执行删除逻辑
-
+        delArticleInfo(row.id)
+        .then(res=>{
+            if(res.data.code  == 200){
+                ElMessage.success("删除成功");
+                query()
+            }else{
+                ElMessage.error(res.data.message)
+            }
+        })
     })
     .catch(()=>{
         ElMessage({
