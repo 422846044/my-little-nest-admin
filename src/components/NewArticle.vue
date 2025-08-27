@@ -6,8 +6,9 @@ import DictCheckBox from './DictCheckBox.vue'
 import UploadPic from './UploadPic.vue'
 import { addArticle, addArticleDraft, addDictDetail } from '../api'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { useRoute, useRouter } from 'vue-router'
 
-
+const router = useRouter()
 
 const ruleFormRef = ref()
 
@@ -33,6 +34,11 @@ function updateEditor(value) {
   check(ruleFormRef.value, 'content')
 }
 
+const goBack = () => {
+  // 返回上一级
+  router.push('/articleManage')
+}
+
 const save = async (formEl) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
@@ -41,6 +47,7 @@ const save = async (formEl) => {
         .then(res => {
           if (res.data.success) {
             ElMessage.success(res.data.message)
+            goBack()
           }
         })
         .catch(error => {
@@ -60,6 +67,7 @@ const saveDraft = async () => {
     .then(res => {
       if (res.data.success) {
         ElMessage.success(res.data.message)
+        goBack()
       }
     })
     .catch(error => {

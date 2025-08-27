@@ -3,12 +3,15 @@ import * as qiniu from 'qiniu-js'
 //引入uuid
 import { v4 as uuidv4 } from 'uuid'
 import { getQiniuyunToken } from '../api'
+import { da } from 'element-plus/es/locales.mjs';
 
 //上传图片 首先调取接口获取七牛云的token
 export function uploadFile(file, resolve) {
     const indexOfSuffix = file.name.lastIndexOf("."); //后缀名
     const suffix = indexOfSuffix >= 0 ? file.name.substr(indexOfSuffix) : "";
-    var prefix = uuidv4().replace('-', '')
+    // 文件目录加日期
+    let date = new Date()
+    var prefix = 'blog/' + date.getFullYear() + '/' + (date.getMonth()+1) + '/' + date.getDate() + '/' + date.getHours() + '/' + uuidv4().replace('-', '')
     const filename = prefix + suffix; // uuid+后缀名
     if (file) {
       getQiniuyunToken().then(res => {

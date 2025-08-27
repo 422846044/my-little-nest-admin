@@ -14,9 +14,9 @@ let articleId = route.query.articleId
 const categoryComponentKey = ref(0)
 const tagComponentKey = ref(0)
 
-onMounted(async ()=>{
+onMounted( ()=>{
   // 根据id回显信息
-  await getArticleInfo(articleId)
+   getArticleInfo(articleId)
   .then(res=>{
     if(res.data.success){
       articleData.title = res.data.data.title
@@ -26,7 +26,6 @@ onMounted(async ()=>{
       articleData.tags = res.data.data.tags
       articleData.cover = res.data.data.cover
       articleData.status = res.data.data.status
-      console.log(res.data.data)
     }
   })
   makeReq.req = true
