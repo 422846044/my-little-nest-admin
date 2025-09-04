@@ -14,6 +14,7 @@ import "tinymce/icons/default";
 import "tinymce/icons/default/icons";
 // 引入编辑器插件
 import "tinymce/plugins/code"; //编辑源码
+import "tinymce/plugins/codesample"; //代码实例
 import "tinymce/plugins/image"; //插入编辑图片
 import "tinymce/plugins/media"; //插入视频
 import "tinymce/plugins/link"; //超链接
@@ -49,7 +50,7 @@ const props = defineProps({
   plugins: {
     type: [String, Array],
     default:
-      "code image media link preview table quickbars template pagebreak lists advlist",
+      "codesample code image media link preview table quickbars template pagebreak lists advlist",
   },
   toolbar: {
     type: [String, Array],
