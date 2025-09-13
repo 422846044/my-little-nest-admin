@@ -1,9 +1,16 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
+import { useDark,useToggle } from "@vueuse/core"
+import { Sunny,Moon } from '@element-plus/icons-vue'
+
 const route=useRoute()
 const router=useRouter()
 const handleSelect = ()=>{}
 const ellipsis = false
+
+const isDark = useDark();
+
+const toggleDark  = useToggle(isDark)
 
 const logout = ()=>{
   localStorage.removeItem("access_token")
@@ -29,7 +36,9 @@ const logout = ()=>{
         注销
       </el-menu-item>
     </el-sub-menu>
-    
+    <el-menu-item index="" class="switch-item">
+      <el-switch v-model="isDark" :active-icon="Moon" :inactive-icon="Sunny" inline-prompt @change="toggleDark"/>
+    </el-menu-item>
   </el-menu>
 </template>
 

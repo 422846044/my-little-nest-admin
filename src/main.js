@@ -1,10 +1,11 @@
-import { createApp } from 'vue'
+import { createApp, ref } from 'vue'
 import App from './App.vue'
 import axios from 'axios'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import router from './router/index' // 引入路由配置文件
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css'
+import 'element-plus/theme-chalk/dark/css-vars.css'
 
 const app = createApp(App)
 axios.interceptors.request.use(config => {
@@ -34,6 +35,8 @@ router.beforeEach(function (to, from, next) {
         next();
     }
 })
+
+app.config.globalProperties.globalTheme = ref('')
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)

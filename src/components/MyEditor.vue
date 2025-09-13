@@ -5,6 +5,7 @@
 </template>
 <script setup>
 import { reactive, ref, onMounted, watch } from "vue";
+import { useDark } from "@vueuse/core"
 import Editor from "@tinymce/tinymce-vue";
 import tinymce from "tinymce/tinymce";
 import "tinymce/themes/silver";
@@ -28,6 +29,21 @@ import "tinymce/plugins/quickbars"; //快速工具条
 import "tinymce/plugins/wordcount"; // 字数统计插件
 import "tinymce/skins/content/default/content.css"
 import { uploadFile } from '../utils/qiniu'
+
+
+const isDark = useDark()
+
+watch(()=>isDark.value,(newValue, oldValue)=>{
+  if(newValue){
+    init.skin_url = "tinymce/skins/ui/oxide-dark"
+    init.content_css = "tinymce/skins/content/dark/content.css"
+  }else{
+    init.skin_url = "tinymce/skins/ui/oxide"
+    init.content_css = "tinymce/skins/content/default/content.css"
+  }
+  tinymce.remove(init.selector)
+  tinymce.init(init)
+})
 
 const emits = defineEmits(["updateEditor"]);
 const props = defineProps({
@@ -78,8 +94,10 @@ const init = reactive({
   language_url: "tinymce/langs/zh-Hans.js", // 语言包的路径，具体路径看自己的项目，文档后面附上中文js文件
   language: "zh-Hans", //语言
   promotion: false, //隐藏右上角Upgrade 按钮
-  skin_url: "tinymce/skins/ui/oxide", // skin路径，具体路径看自己的项目
-  content_css: "tinymce/skins/content/default/content.css",
+  //skin_url: "tinymce/skins/ui/oxide", // skin路径，具体路径看自己的项目
+  skin_url: "tinymce/skins/ui/oxide-dark",
+  //content_css: "tinymce/skins/content/default/content.css",
+  content_css: "tinymce/skins/content/dark/content.css",
   menubar: true, //顶部菜单栏显示
   statusbar: true, // 底部的状态栏
   plugins: props.plugins,

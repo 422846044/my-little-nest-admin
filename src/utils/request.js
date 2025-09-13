@@ -49,7 +49,7 @@ service.interceptors.response.use(async (response) => {
     setTimeout(() => {
         hideLoading()
     }, 200)
-    if (response.data.code === 402) {
+    if (response.data.code === 1022) {
         // 登录凭证过期
         // 清除cookie 跳转登录页面
         let refreshTokenStr = localStorage.getItem('refresh_token')
